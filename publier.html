@@ -14,13 +14,12 @@
 
     body {
       display: flex;
-      height: 100vh;
       background: #fff;
       color: #222;
-      overflow: hidden;
+      min-height: 100vh;
     }
 
-    /* --- Sidebar --- */
+    /* --- Sidebar fixe à gauche --- */
     .sidebar {
       width: 220px;
       background: #0d0d0d;
@@ -30,6 +29,10 @@
       align-items: flex-start;
       padding: 32px 20px;
       flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
     }
 
     .logo {
@@ -80,20 +83,26 @@
       font-weight: 600;
     }
 
-    /* --- Main content --- */
+    /* --- Contenu principal --- */
     main {
+      margin-left: 220px; /* espace pour la sidebar */
       flex: 1;
       background: #fafafa;
-      padding: 48px 60px;
-      overflow-y: auto;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
       margin-bottom: 28px;
+      width: 100%;
+      max-width: 420px;
     }
 
+    /* --- Zone upload --- */
     .upload-box {
       border: 2px dashed #d0d0d0;
       border-radius: 12px;
@@ -101,9 +110,11 @@
       padding: 60px 20px;
       text-align: center;
       color: #666;
-      font-size: 16px;
+      font-size: 15px;
       transition: border-color 0.2s, background 0.2s;
-      max-width: 600px;
+      width: 100%;
+      max-width: 420px;
+      cursor: pointer;
     }
 
     .upload-box.dragover {
@@ -112,15 +123,17 @@
     }
 
     .upload-box svg {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       fill: #999;
       margin-bottom: 10px;
     }
 
+    /* --- Champs texte --- */
     .form-group {
       margin-top: 24px;
-      max-width: 600px;
+      width: 100%;
+      max-width: 420px;
     }
 
     label {
@@ -151,6 +164,7 @@
       resize: vertical;
     }
 
+    /* --- Miniature --- */
     .thumbnail-upload {
       display: flex;
       align-items: center;
@@ -191,10 +205,11 @@
       border: 1px solid #ddd;
     }
 
+    /* --- Bouton Publier --- */
     button {
       display: block;
       width: 100%;
-      max-width: 600px;
+      max-width: 420px;
       margin-top: 28px;
       padding: 16px;
       border: none;
@@ -211,48 +226,10 @@
       background: #8b6ef4;
     }
 
-    /* --- Responsive --- */
-    @media (max-width: 800px) {
-      body {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 60px;
-        padding: 0 10px;
-      }
-
-      .logo {
-        margin: 0;
-        font-size: 18px;
-      }
-
-      .nav {
-        flex-direction: row;
-        gap: 20px;
-        padding: 0;
-      }
-
-      main {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      .upload-box {
-        padding: 40px 10px;
-        font-size: 14px;
-      }
-    }
   </style>
 </head>
 <body>
+  <!-- BARRE GAUCHE -->
   <aside class="sidebar">
     <div class="logo">LUX<span>TUBE</span></div>
     <nav class="nav">
@@ -275,6 +252,7 @@
     </nav>
   </aside>
 
+  <!-- CONTENU PRINCIPAL -->
   <main>
     <h1>Créer une vidéo</h1>
 
