@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUXTUBE – Créer une vidéo</title>
+  <style>
+    /* -------- RESET -------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #fff;
+      color: #222;
+    }
+
+    /* -------- SIDEBAR -------- */
+    .sidebar {
+      width: 240px;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 0;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo span {
+      color: #a78bfa; /* violet */
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-left: 40px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #ccc;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+
+    .nav a:hover, .nav a.active {
+      color: #a78bfa;
+    }
+
+    .nav a svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .nav a.publish {
+      margin-top: 40px;
+      color: #a78bfa;
+      font-weight: 600;
+    }
+
+    /* -------- MAIN -------- */
+    main {
+      flex: 1;
+      padding: 48px 80px;
+      background: #fafafa;
+      overflow-y: auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    /* -------- UPLOAD ZONE -------- */
+    .upload-box {
+      border: 2px dashed #d0d0d0;
+      border-radius: 12px;
+      background: #f8f8f8;
+      padding: 60px 20px;
+      text-align: center;
+      color: #666;
+      font-size: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .upload-box.dragover {
+      border-color: #a78bfa;
+      background: #f5f0ff;
+    }
+
+    .upload-box svg {
+      width: 48px;
+      height: 48px;
+      fill: #999;
+      margin-bottom: 12px;
+    }
+
+    /* -------- FORM -------- */
+    .form-group {
+      margin-top: 32px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #d6d6d6;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #a78bfa;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .thumbnail-upload {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .thumbnail-box {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .thumbnail-box:hover {
+      background: #f0e9ff;
+      border-color: #a78bfa;
+    }
+
+    .thumbnail-box svg {
+      width: 24px;
+      height: 24px;
+      fill: #999;
+    }
+
+    .thumbnail-preview {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: none;
+      border: 1px solid #ddd;
+    }
+
+    /* -------- BUTTON -------- */
+    button {
+      margin-top: 32px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #a78bfa;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #946ef7;
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">LUX<span>TUBE</span></div>
+    <nav class="nav">
+      <a href="#" class="active">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Home
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h7v8l10-12h-7z"/></svg>
+        Trending
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        Subscriptions
+      </a>
+      <a href="#" class="publish">
+        <svg viewBox="0 0 24 24"><path d="M13 3h-2v8H7l5 5 5-5h-4zM5 18v2h14v-2H5z"/></svg>
+        Publier
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <h1>Créer une vidéo</h1>
+
+    <div class="upload-box" id="uploadBox">
+      <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.34v4h4.66V9h3.34L12 2z"/></svg>
+      Glissez-déposez une vidéo<br>ou cliquez pour téléverser
+      <input type="file" id="videoInput" accept="video/*" hidden>
+    </div>
+
+    <div class="form-group">
+      <label for="title">Titre de la vidéo</label>
+      <input type="text" id="title" placeholder="Entrez le titre de la vidéo">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" placeholder="Ajoutez une description...">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="thumbnail">Téléverser une miniature</label>
+      <div class="thumbnail-upload">
+        <label class="thumbnail-box" for="thumbnailInput">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm-1 14H6l3.5-4.5 2.5 3 3.5-4.5L18 17z"/></svg>
+        </label>
+        <input type="file" id="thumbnailInput" accept="image/*" hidden>
+        <img id="thumbnailPreview" class="thumbnail-preview" alt="Aperçu miniature">
+      </div>
+    </div>
+
+    <button id="publishBtn">Publier</button>
+  </main>
+
+  <script>
+    const uploadBox = document.getElementById('uploadBox');
+    const videoInput = document.getElementById('videoInput');
+    const thumbInput = document.getElementById('thumbnailInput');
+    const thumbPreview = document.getElementById('thumbnailPreview');
+
+    // Drag & Drop upload
+    uploadBox.addEventListener('click', () => videoInput.click());
+
+    ['dragenter', 'dragover'].forEach(evt => {
+      uploadBox.addEventListener(evt, e => {
+        e.preventDefault();
+        uploadBox.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(evt => {
+      uploadBox.addEventListener(evt, e => {
+        e.preventDefault();
+        uploadBox.classList.remove('dragover');
+      });
+    });
+
+    uploadBox.addEventListener('drop', e => {
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        alert('Vidéo sélectionnée : ' + file.name);
+      }
+    });
+
+    videoInput.addEventListener('change', e => {
+      if (e.target.files[0]) alert('Vidéo sélectionnée : ' + e.target.files[0].name);
+    });
+
+    // Miniature preview
+    thumbInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        thumbPreview.src = ev.target.result;
+        thumbPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
