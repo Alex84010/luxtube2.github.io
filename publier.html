@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUXTUBE – Créer une vidéo</title>
   <style>
-    /* -------- RESET -------- */
     * {
       margin: 0;
       padding: 0;
@@ -16,79 +15,85 @@
     body {
       display: flex;
       height: 100vh;
-      background-color: #fff;
+      background: #fff;
       color: #222;
+      overflow: hidden;
     }
 
-    /* -------- SIDEBAR -------- */
+    /* --- Sidebar --- */
     .sidebar {
-      width: 240px;
+      width: 220px;
       background: #0d0d0d;
       color: #fff;
       display: flex;
       flex-direction: column;
-      padding: 32px 0;
+      align-items: flex-start;
+      padding: 32px 20px;
+      flex-shrink: 0;
     }
 
     .logo {
+      font-size: 22px;
       font-weight: 800;
-      font-size: 24px;
-      text-align: center;
       margin-bottom: 48px;
+      align-self: center;
     }
 
     .logo span {
-      color: #a78bfa; /* violet */
+      color: #a78bfa;
     }
 
     .nav {
       display: flex;
       flex-direction: column;
-      gap: 24px;
-      padding-left: 40px;
+      gap: 22px;
+      width: 100%;
     }
 
     .nav a {
       display: flex;
       align-items: center;
-      gap: 16px;
-      color: #ccc;
+      gap: 14px;
+      color: #cfcfcf;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       transition: 0.2s;
+      padding: 8px 10px;
+      border-radius: 6px;
     }
 
-    .nav a:hover, .nav a.active {
+    .nav a:hover,
+    .nav a.active {
       color: #a78bfa;
+      background: rgba(167, 139, 250, 0.1);
     }
 
     .nav a svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
     .nav a.publish {
-      margin-top: 40px;
+      margin-top: 32px;
       color: #a78bfa;
       font-weight: 600;
     }
 
-    /* -------- MAIN -------- */
+    /* --- Main content --- */
     main {
       flex: 1;
-      padding: 48px 80px;
       background: #fafafa;
+      padding: 48px 60px;
       overflow-y: auto;
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
-    /* -------- UPLOAD ZONE -------- */
     .upload-box {
       border: 2px dashed #d0d0d0;
       border-radius: 12px;
@@ -98,48 +103,51 @@
       color: #666;
       font-size: 16px;
       transition: border-color 0.2s, background 0.2s;
+      max-width: 600px;
     }
 
     .upload-box.dragover {
       border-color: #a78bfa;
-      background: #f5f0ff;
+      background: #f4f0ff;
     }
 
     .upload-box svg {
       width: 48px;
       height: 48px;
       fill: #999;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    /* -------- FORM -------- */
     .form-group {
-      margin-top: 32px;
+      margin-top: 24px;
+      max-width: 600px;
     }
 
     label {
       display: block;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    input[type="text"], textarea {
+    input[type="text"],
+    textarea {
       width: 100%;
       padding: 14px;
+      border: 1px solid #ddd;
       border-radius: 8px;
-      border: 1px solid #d6d6d6;
       font-size: 15px;
-      outline: none;
       background: #fff;
+      outline: none;
       transition: border-color 0.2s;
     }
 
-    input:focus, textarea:focus {
+    input:focus,
+    textarea:focus {
       border-color: #a78bfa;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 90px;
       resize: vertical;
     }
 
@@ -147,7 +155,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-top: 16px;
+      margin-top: 12px;
     }
 
     .thumbnail-box {
@@ -183,10 +191,11 @@
       border: 1px solid #ddd;
     }
 
-    /* -------- BUTTON -------- */
     button {
-      margin-top: 32px;
+      display: block;
       width: 100%;
+      max-width: 600px;
+      margin-top: 28px;
       padding: 16px;
       border: none;
       border-radius: 8px;
@@ -199,12 +208,51 @@
     }
 
     button:hover {
-      background: #946ef7;
+      background: #8b6ef4;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        padding: 0 10px;
+      }
+
+      .logo {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .nav {
+        flex-direction: row;
+        gap: 20px;
+        padding: 0;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .upload-box {
+        padding: 40px 10px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="logo">LUX<span>TUBE</span></div>
     <nav class="nav">
@@ -227,24 +275,23 @@
     </nav>
   </aside>
 
-  <!-- MAIN -->
   <main>
     <h1>Créer une vidéo</h1>
 
     <div class="upload-box" id="uploadBox">
       <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.34v4h4.66V9h3.34L12 2z"/></svg>
       Glissez-déposez une vidéo<br>ou cliquez pour téléverser
-      <input type="file" id="videoInput" accept="video/*" hidden>
+      <input type="file" id="videoInput" accept="video/*" hidden />
     </div>
 
     <div class="form-group">
       <label for="title">Titre de la vidéo</label>
-      <input type="text" id="title" placeholder="Entrez le titre de la vidéo">
+      <input type="text" id="title" placeholder="Entrez le titre de la vidéo" />
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea id="description" placeholder="Ajoutez une description...">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+      <textarea id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
     </div>
 
     <div class="form-group">
@@ -253,8 +300,8 @@
         <label class="thumbnail-box" for="thumbnailInput">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm-1 14H6l3.5-4.5 2.5 3 3.5-4.5L18 17z"/></svg>
         </label>
-        <input type="file" id="thumbnailInput" accept="image/*" hidden>
-        <img id="thumbnailPreview" class="thumbnail-preview" alt="Aperçu miniature">
+        <input type="file" id="thumbnailInput" accept="image/*" hidden />
+        <img id="thumbnailPreview" class="thumbnail-preview" alt="Aperçu miniature" />
       </div>
     </div>
 
@@ -267,7 +314,6 @@
     const thumbInput = document.getElementById('thumbnailInput');
     const thumbPreview = document.getElementById('thumbnailPreview');
 
-    // Drag & Drop upload
     uploadBox.addEventListener('click', () => videoInput.click());
 
     ['dragenter', 'dragover'].forEach(evt => {
@@ -286,16 +332,13 @@
 
     uploadBox.addEventListener('drop', e => {
       const file = e.dataTransfer.files[0];
-      if (file) {
-        alert('Vidéo sélectionnée : ' + file.name);
-      }
+      if (file) alert('Vidéo sélectionnée : ' + file.name);
     });
 
     videoInput.addEventListener('change', e => {
       if (e.target.files[0]) alert('Vidéo sélectionnée : ' + e.target.files[0].name);
     });
 
-    // Miniature preview
     thumbInput.addEventListener('change', e => {
       const file = e.target.files[0];
       if (!file) return;
